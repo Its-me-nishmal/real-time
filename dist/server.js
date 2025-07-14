@@ -9,12 +9,20 @@ const io = new socket_io_1.Server(httpServer, {
     },
 });
 io.on("connection", (socket) => {
-    console.log("a user connected");
+    console.log(`A user connected: ${socket.id}`);
     socket.on("chat message", (msg) => {
-        io.emit("chat message", { id: socket.id, data: msg });
+        console.log(`[SERVER] Received message from ${socket.id}:`, msg);
+        // This is the object we will broadcast. It MUST be flat.
+        const broadcastMessage = {
+            id: socket.id,
+            type: msg.type,
+            data: msg.data,
+        };
+        console.log(`[SERVER] Broadcasting message:`, broadcastMessage);
+        io.emit("chat message", broadcastMessage);
     });
     socket.on("disconnect", () => {
-        console.log("user disconnected");
+        console.log(`User disconnected: ${socket.id}`);
     });
 });
 const port = 3001;

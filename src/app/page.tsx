@@ -60,14 +60,17 @@ export default function Home() {
 
   useEffect(() => {
     if (socket && isChatVisible) {
-      const handleNewMessage = (msg: any) => {
-        let finalMsg = msg;
-        if (msg && msg.data && typeof msg.data === 'object' && msg.data.type && msg.data.data) {
-          finalMsg = {
-            id: msg.id,
-            type: msg.data.type,
-            data: msg.data.data,
-          };
+      const handleNewMessage = (msg: {
+        id: string;
+        type: "text" | "voice";
+        data: string | { type: "text" | "voice"; data: string };
+      }) => {
+        let finalMsg: { id: string; type: "text" | "voice"; data: string };
+
+        if (typeof msg.data === "object" && msg.data !== null) {
+          finalMsg = { id: msg.id, type: msg.data.type, data: msg.data.data };
+        } else {
+          finalMsg = { id: msg.id, type: msg.type, data: msg.data as string };
         }
 
         if (!finalMsg || !finalMsg.id || !finalMsg.data || !finalMsg.type) {
@@ -291,8 +294,8 @@ export default function Home() {
               icon={<UserX className="w-8 h-8 text-indigo-400" />}
               title="True Anonymity"
             >
-              We don't just hide your status, we don't have it. No 'online',
-              'last seen', or 'typing' indicators.
+              We dont just hide your status, we dont have it. No online,
+              last seen, or typing indicators.
             </FeatureCard>
             <FeatureCard
               icon={<FileCheck className="w-8 h-8 text-indigo-400" />}
