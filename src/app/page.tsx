@@ -46,7 +46,9 @@ export default function Home() {
     null
   );
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const socket = useSocket("http://localhost:3001");
+  const socket = useSocket(
+    process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001"
+  );
   const chatEndRef = useRef<HTMLDivElement>(null);
   const keyRef = useRef(key);
 

@@ -30,7 +30,8 @@ io.on("connection", (socket) => {
   });
 });
 
-const port = 3001;
+const port = process.env.PORT || 3001;
+const host = '0.0.0.0';
 
 httpServer.on('error', (err: any) => {
   if (err.code === 'EADDRINUSE') {
@@ -40,8 +41,8 @@ httpServer.on('error', (err: any) => {
   }
 });
 
-httpServer.listen(port, () => {
-  console.log(`listening on *:${port}`);
+httpServer.listen(Number(port), host, () => {
+  console.log(`listening on ${host}:${port}`);
 });
 
 process.on('SIGINT', () => {
