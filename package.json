@@ -9,8 +9,8 @@
     "dev": "npm-run-all --parallel dev:next dev:server",
     "build": "next build && npm run build:server",
     "start:frontend": "next start",
-"start:backend": "node dist/server.js",
-"start": "npm-run-all --parallel start:frontend start:backend",
+    "start:backend": "node dist/server.js",
+    "start": "npm-run-all --parallel start:frontend start:backend",
     "lint": "next lint"
   },
   "dependencies": {
