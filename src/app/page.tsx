@@ -47,7 +47,7 @@ export default function Home() {
   );
   const [isDarkMode, setIsDarkMode] = useState(true);
   const socket = useSocket(
-    "https://real-time-bsf6.onrender.com:3001/"
+    "https://chat.nichu.dev:3001/"
   );
   const chatEndRef = useRef<HTMLDivElement>(null);
   const keyRef = useRef(key);
