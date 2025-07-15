@@ -30,8 +30,8 @@ io.on("connection", (socket) => {
   });
 });
 
-const port = process.env.PORT || 3001;
-const host = '0.0.0.0';
+const port = 3001
+const host = 'https://chat.nichu.dev';
 
 httpServer.on('error', (err: any) => {
   if (err.code === 'EADDRINUSE') {
