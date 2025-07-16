@@ -26,6 +26,7 @@ io.on("connection", (socket) => {
     });
 });
 const port = 3001;
+const host = 'localhost';
 httpServer.on('error', (err) => {
     if (err.code === 'EADDRINUSE') {
         console.log(`Port ${port} is already in use.`);
@@ -34,8 +35,8 @@ httpServer.on('error', (err) => {
         console.error(err);
     }
 });
-httpServer.listen(port, () => {
-    console.log(`listening on *:${port}`);
+httpServer.listen(Number(port), host, () => {
+    console.log(`listening on ${host}:${port}`);
 });
 process.on('SIGINT', () => {
     console.log('Shutting down server...');

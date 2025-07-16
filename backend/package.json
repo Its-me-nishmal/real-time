@@ -1,0 +1,19 @@
+{
+  "name": "global-chat-backend",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "ts-node server.ts"
+  },
+  "dependencies": {
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "ts-node": "^10.9.2",
+    "typescript": "^5"
+  }
+}

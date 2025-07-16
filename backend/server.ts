@@ -31,7 +31,7 @@ io.on("connection", (socket) => {
 });
 
 const port = 3001
-const host = 'https://chat.nichu.dev';
+const host = 'localhost';
 
 httpServer.on('error', (err: any) => {
   if (err.code === 'EADDRINUSE') {
