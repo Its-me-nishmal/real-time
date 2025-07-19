@@ -11,9 +11,7 @@ app.use(cors({
   methods: ["GET", "POST"],
 }));
 
-app.get("/", (req, res) => {
-  res.send("Server is running");
-});
+
 
 // HTTP + Socket Server
 const httpServer = createServer(app);
