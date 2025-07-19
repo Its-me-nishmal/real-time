@@ -65,43 +65,32 @@ export default function Home() {
       const handleNewMessage = (msg: {
         id: string;
         type: "text" | "voice";
-        data: string | { type: "text" | "voice"; data: string };
+        data: string;
       }) => {
-        let finalMsg: { id: string; type: "text" | "voice"; data: string };
-
-        if (typeof msg.data === "object" && msg.data !== null) {
-          finalMsg = { id: msg.id, type: msg.data.type, data: msg.data.data };
-        } else {
-          finalMsg = { id: msg.id, type: msg.type, data: msg.data as string };
-        }
-
-        if (!finalMsg || !finalMsg.id || !finalMsg.data || !finalMsg.type) {
+        if (!msg || !msg.id || !msg.data || !msg.type) {
           return;
         }
 
-        const decrypted = decrypt(finalMsg.data, keyRef.current);
+        const decrypted = decrypt(msg.data, keyRef.current);
+
         setMessages((prevMessages) => {
-          if (
-            prevMessages.some(
-              (m) => m.id === finalMsg.id && m.encrypted === finalMsg.data
-            )
-          ) {
+          if (prevMessages.some((m) => m.id === msg.id && m.encrypted === msg.data)) {
             return prevMessages;
           }
           const newMessage: Message = {
-            type: finalMsg.type,
-            id: finalMsg.id,
-            encrypted: finalMsg.data,
+            type: msg.type,
+            id: msg.id,
+            encrypted: msg.data,
             decrypted,
           };
           return [...prevMessages, newMessage];
         });
       };
 
-      socket.on("chat message", handleNewMessage);
+      socket.on("message", handleNewMessage);
 
       return () => {
-        socket.off("chat message", handleNewMessage);
+        socket.off("message", handleNewMessage);
       };
     }
   }, [socket, isChatVisible]);
@@ -114,7 +103,7 @@ export default function Home() {
     e.preventDefault();
     if (messageInput && key && socket) {
       const encryptedMessage = encrypt(messageInput, key);
-      socket.emit("chat message", { type: "text", data: encryptedMessage });
+      socket.emit("messaged", { type: "text", data: encryptedMessage });
       setMessageInput("");
     }
   };
@@ -126,7 +115,7 @@ export default function Home() {
       reader.onloadend = () => {
         const base64Audio = reader.result as string;
         const encryptedAudio = encrypt(base64Audio, key);
-        socket.emit("chat message", { type: "voice", data: encryptedAudio });
+        socket.emit("messaged", { type: "voice", data: encryptedAudio });
       };
     }
   };
