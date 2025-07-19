@@ -3,6 +3,11 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 
 const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Server is running");
+});
+
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
